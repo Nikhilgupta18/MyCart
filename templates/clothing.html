@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Clothing{% endblock %}
+
+{% block content %}
+    <div class="container">
+    This is the product.
+
+        {% for product in products %}
+            {% if product.P_category == 'C' %}
+            <li>
+                {{ product }}
+                <img src="{{ product.P_image.url }}" alt="{{ product }} image"  width="100">
+            </li>
+
+            {% endif %}
+        {% endfor %}
+
+    </div>
+{% endblock %}
