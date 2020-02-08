@@ -1,41 +1,53 @@
 from django.shortcuts import render
 from product import models
+from django.views.generic import (
+    TemplateView,
+    DetailView,
+    ListView
+)
 from math import ceil
 
 
 # Create your views here.
 
 
-def Clothing_Display(request):
-    products = models.Product.objects.all()
+def ClothingDisplay(request):
+    product = models.Product.objects.filter(P_category='C')
     context = {
-        'products': products,
-    }
-    return render(request, 'clothing.html', context)
-
-
-def Electronics_Display(request):
-    products = models.Product.objects.all()
-    context = {
-        'products': products,
+        'product': product,
 
     }
-    return render(request, 'electronics.html', context)
+    return render(request, 'product_view.html', context)
 
 
-def Education_Display(request):
-    products = models.Product.objects.all()
+def ElectronicsDisplay(request):
+    product = models.Product.objects.filter(P_category='E')
     context = {
-        'products': products,
+        'product': product,
 
     }
-    return render(request, 'education.html', context)
+    return render(request, 'product_view.html', context)
 
 
-def Sports_Display(request):
-    products = models.Product.objects.all()
+def EducationDisplay(request):
+    product = models.Product.objects.filter(P_category='Ed')
     context = {
-        'products': products,
+        'product': product,
 
     }
-    return render(request, 'sports.html', context)
+    return render(request, 'product_view.html', context)
+
+
+def SportsDisplay(request):
+    product = models.Product.objects.filter(P_category='S')
+    context = {
+        'product': product,
+
+    }
+    return render(request, 'product_view.html', context)
+
+
+
+class ProductView(DetailView):
+    model = models.Product
+    template_name='product.html'

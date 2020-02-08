@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block css %}
+
+    .btn-cart {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+
+}
+{% endblock %}
+{% block content %}
+    {% for product in product %}
+<div class="jumbotron" style="margin-top: 25px;">
+<div class="container " >
+        <div class="row">
+            <img class="col-sm-4"src="{{ product.P_image.url }}" width="300px" height="250px" alt="..">
+            <div class="col-sm-8">
+                <h2 class="display-6">
+                {{product.P_name}}
+                </h2>
+                <hr>
+                <p >{{ product.P_desc }}</p>
+                {% if product.P_gender == 'M'%}
+                    Male
+                {% elif product.P_gender == 'F' %}
+                    Female
+              {% endif %}
+{#                {{ product.P_gender }}#}
+                <h4 class="display-8">₹{{ product.P_price }}</h4>
+
+
+
+            </div>
+
+        </div>
+
+        
+<button class="btn btn-cart btn-primary" style="margin-top: 10px; ">Add To Cart</button>
+
+    </div>
+
+
+</div>
+    {% endfor %}
+
+{% endblock %}

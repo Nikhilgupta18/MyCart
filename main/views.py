@@ -7,6 +7,7 @@ from math import ceil
 
 def index(request):
     product = models.Product.objects.all()
+    category = models.Product.objects.filter(P_category='E')
     n = len(product)
     slides = n // 4 + ceil((n / 4) - (n // 4))
     context = {
