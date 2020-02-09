@@ -34,8 +34,9 @@
 
         </div>
 
-        
-<button class="btn btn-cart btn-primary" style="margin-top: 10px; ">Add To Cart</button>
+
+    <button class="btn btn-cart btn-primary mx-3" style="margin-top: 10px; ">Buy Now</button>
+    <button class="btn btn-cart btn-primary cart" id="cart{{product.id}}"style="margin-top: 10px; ">Add To Cart</button>
 
     </div>
 
@@ -44,3 +45,8 @@
     {% endfor %}
 
 {% endblock %}
+
+{#<script>#}
+{##}
+{#    {% include 'cart.js' %}#}
+{#</script>#}

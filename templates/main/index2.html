@@ -5,7 +5,7 @@
             .jumbotron{
                 padding: 2rem 1rem;
 
-    margin-bottom: 0;
+    margin-bottom: 10px;
   background-image: linear-gradient(to right, rgb(0, 255, 190), rgb(16, 89, 133));
     border-radius: 4.5rem;
 }
@@ -20,8 +20,11 @@
           {
           display: inline-block;
           margin-left:-4px;
+  box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.2), 10px 6px 20px 0 rgba(0, 0, 0, 0.19);;
+
 
           }
+
 
           .carousel-indicators .active {
                 background-color: black;
@@ -87,12 +90,12 @@
                   <div class="carousel-item active" >
                   {% for i in product %}
                     <div class="col-xs-3 col-sm-3 col-md-3">
-                      <div class="card" style="width: 16rem;">
+                      <div class="card align-items-center" style="width: 16rem;">
                         <img src='{{ i.P_image.url }}' class="card-img-top img-responsive" alt="...">
                         <div class="card-body">
                           <p class="card-title">{{i.P_name}}</p>
             {#              <p class="card-text">{{i.desc}}</p>#}
-                          <a href="{% url 'product_view' i.id %}" class="btn btn-primary">View</a>
+                          <a href="{% url 'product' i.id %}" class="btn btn-primary">View</a>
                           <button id="cart{{i.id}}" class="btn btn-primary cart">Add to Cart</button>
                         </div>
                       </div>
@@ -121,28 +124,7 @@
     </div>
  {% endblock %}
 {% block js %}
-    console.log('hi');
-if (localStorage.getItem('cart') == null){
-    var cart = {};
-}
-
-    else{
-        cart = JSON.parse(localStorage.getItem('cart'));
-        document.getElementById('cart').innerHTML = Object.keys(cart).length;
-    }
-
-    $('.cart').click(function(){
-    console.log(idstr);
-    var idstr = this.id.toString();
-    if (cart[idstr] != undefined){
-        cart[idstr] = cart[idstr]+1;
-    }
-    else{
-        cart[idstr] = 1;
-    }
-    console.log(cart);
-    localStorage.setItem('cart', JSON.stringify(cart));
-});
+{#{% include 'cart.js' %}#}
 
 
 

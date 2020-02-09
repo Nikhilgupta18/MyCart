@@ -42,10 +42,10 @@
           Categories
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'clothing' %}">Clothing</a>
-          <a class="dropdown-item" href="{% url 'electronics' %}">Electronics</a>
-          <a class="dropdown-item" href="{% url 'sports' %}">Sports</a>
-          <a class="dropdown-item" href="{% url 'education' %}">Education</a>
+          <a class="dropdown-item" href="{% url 'category_view' category='C' %}">Clothing</a>
+          <a class="dropdown-item" href="{% url 'category_view' category='E' %}">Electronics</a>
+          <a class="dropdown-item" href="{% url 'category_view' category='S' %}">Sports</a>
+          <a class="dropdown-item" href="{% url 'category_view' category='Ed' %}">Education</a>
 {#          <div class="dropdown-divider"></div>#}
 {#          <a class="dropdown-item" href="#">Something else here</a>#}
         </div>
@@ -97,7 +97,11 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script>
-    {% block js %}{% endblock %}
+{% include 'cart.js' %}
+
+    {% block js %}
+
+    {% endblock %}
 </script>
 
 </body>
