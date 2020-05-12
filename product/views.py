@@ -8,13 +8,6 @@ from django.views.generic import (
 from math import ceil
 
 
-# Create your views here.
-
-
-
-
-
-
 class ProductView(DetailView):
     model = models.Product
     template_name='product.html'

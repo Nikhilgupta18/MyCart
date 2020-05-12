@@ -6,6 +6,7 @@ from math import ceil
 
 
 def index(request):
+    print(request.session.get("first_name", "Unknown"))
     product = models.Product.objects.all()
     n = len(product)
     slides = n // 4 + ceil((n / 4) - (n // 4))
