@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.signals import pre_save, post_save, m2m_changed
 from product.models import Product
+# from django.contrib.sessions.models import Session
 
 
 # Create your models here.
@@ -11,12 +12,14 @@ class CartManager(models.Manager):
         qs = self.get_queryset().filter(id=cart_id)
         if qs.count() == 1:
             new_obj = False
+            print('already there')
             cart_obj = qs.first()
             if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
                 cart_obj.save()
         else:  # if it does not exists
             new_obj = True
+            print('new')
             cart_obj = Cart.objects.new(user=request.user)
             request.session['cart_id'] = cart_obj.id
         return cart_obj, new_obj
@@ -32,6 +35,7 @@ class CartManager(models.Manager):
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     products = models.ManyToManyField(Product, blank=True)
+    subtotal = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)
     total = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -40,3 +44,29 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
+    # print(action)
+    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
+        products = instance.products.all()
+        total = 0
+        for i in products:
+            total += i.P_price
+        if instance.subtotal != total:
+            instance.subtotal = total
+            instance.save()
+
+
+m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
+
+
+def pre_save_cart_receiver(sender, instance, *args, **kargs):
+    if 0 < instance.subtotal < 4000:
+        instance.total = instance.subtotal + 25  # this could account for like shipping charges or tax etc.
+    else:
+        instance.total = instance.subtotal
+
+
+pre_save.connect(pre_save_cart_receiver, sender=Cart)
+

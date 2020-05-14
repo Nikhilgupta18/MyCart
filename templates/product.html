@@ -9,31 +9,36 @@
 }
 {% endblock %}
 {% block content %}
+
 <div class="jumbotron" style="margin-top: 25px;">
-<div class="container " >
-        <div class="row">
-            <img class="col-sm-4"src="{{ product.P_image.url }}" width="300px" height="250px" alt="..">
-            <div class="col-sm-8">
-                <h2 class="display-6">
-                {{product.P_name}}
-                </h2>
-                <hr>
-                <p >{{ product.P_desc }}</p>
-                <h4 class="display-8">₹{{ product.P_price }}</h4>
-                {{ product.P_gender }}
-
-
-
+    <div class="container " >
+            <div class="row">
+                <img class="col-sm-4"src="{{ product.P_image.url }}" width="300px" height="250px" alt="..">
+                <div class="col-sm-8">
+                    <h2 class="display-6">
+                    {{product.P_name}}
+                    </h2>
+                    <hr>
+                    <p >{{ product.P_desc }}</p>
+                    <h4 class="display-8">₹{{ product.P_price }}</h4>
+                    {{ product.P_gender }}
+                </div>
             </div>
+       <form method="POST" action="{% url 'cart-update' %}" >
+        {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+        <button class="btn btn-cart btn-primary mx-3" style="margin-top: 10px; ">Buy Now</button>
+        {% if product in cart.products.all %}
 
-        </div>
+            <button class="btn  btn-danger" type="submit" style="margin-top: 10px; ">Remove From Cart</button>
 
-            <button class="btn btn-cart btn-primary mx-3" style="margin-top: 10px; ">Buy Now</button>
-<span id="divcart{{product.id}}" class="divcart">
-<button class="btn btn-cart btn-primary cart" id="cart{{product.id}}"style="margin-top: 10px; ">Add To Cart</button>
-</span>
+        {% else %}
+
+            <button class="btn  btn-success cart" type="submit" style="margin-top: 10px; ">Add To Cart</button>
+
+        {% endif %}
+    </form>
     </div>
-
 
 </div>
 {% endblock %}

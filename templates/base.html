@@ -64,7 +64,7 @@
 
         <ul class="navbar-nav ml-auto">
         <li class="nav-item ">
-            <a class="nav-link" href="{% url 'cart' %}">Cart(<span id="cart">0</span>)</a>
+            <a class="nav-link" href="{% url 'cart' %}">Cart(<span>{{ cart.id }}</span>)</a>
         </li>
             <li class="nav-item">
                       {% if request.user.is_authenticated %}
@@ -83,23 +83,7 @@
 
 
   </div>
-    <form action="{% url 'set_language' %}" method="post" id="myForm">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ redirect_to }}">
-    <label>
-        <select name="language">
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
-                        selected{% endif %}> {{ language.name_local }} ({{ language.code }})
-                </option>
-            {% endfor %}
-        </select>
-    </label>
 
-</form>
 </nav>
 
 
@@ -116,9 +100,6 @@
     {% endblock %}
     {% include 'cart2.js' %}
 
-document.getElementById("myForm").onclick = function() {
-  document.getElementById("myForm").submit();
-};
 </script>
 
 </body>

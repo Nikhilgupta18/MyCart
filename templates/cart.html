@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>This is cart home. Hello world</h1>
+    <div class="container">
+        <h1>Your Cart{{ cart.id }}</h1>
+        {% for i in cart.products.all %}
+            <ul>
+                <li>
+                    {{ i }}
+                </li>
+            </ul>
+        {% endfor %}
+        <h3>Your SubTotal: ₹{{ cart.subtotal }}</h3>
+        <h3>Total amount: ₹{{ cart.total }}</h3>
+    </div>
 
-    {{ cart }}
 {% endblock %}
