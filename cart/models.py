@@ -2,34 +2,41 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save, m2m_changed
 from product.models import Product
+
+
 # from django.contrib.sessions.models import Session
 
 
 # Create your models here.
-class CartManager(models.Manager):
-    def new_or_get(self, request):
-        cart_id = request.session.get('cart_id', None)
-        qs = self.get_queryset().filter(id=cart_id)
-        if qs.count() == 1:
-            new_obj = False
-            print('already there')
-            cart_obj = qs.first()
-            if request.user.is_authenticated and cart_obj.user is None:
-                cart_obj.user = request.user
-                cart_obj.save()
-        else:  # if it does not exists
-            new_obj = True
-            print('new')
-            cart_obj = Cart.objects.new(user=request.user)
-            request.session['cart_id'] = cart_obj.id
-        return cart_obj, new_obj
-
-    def new(self, user=None):
-        user_obj = None
-        if user is not None:
-            if user.is_authenticated:
-                user_obj = user
-        return self.model.objects.create(user=user_obj)
+# class CartManager(models.Manager):
+#     def new_or_get(self, request):
+#         print(request.session.get('cart_id'))
+#         cart_id = request.session.get('cart_id', None)
+#         qs = self.get_queryset().filter(id=cart_id)
+#         print(qs)
+#         if qs.count() == 1:
+#             new_obj = False
+#             print('already there')
+#             print(request.user)
+#             cart_obj = qs.first()
+#             if request.user.is_authenticated and cart_obj.user is None:
+#                 cart_obj.user = request.user
+#                 cart_obj.save()
+#
+#         else:  # if it does not exists
+#             new_obj = True
+#             print('new')
+#             cart_obj = Cart.objects.new(user=request.user)
+#             request.session['cart_id'] = cart_obj.id
+#         print(cart_obj)
+#         return cart_obj, new_obj
+#
+#     def new(self, user=None):
+#         user_obj = None
+#         if user is not None:
+#             if user.is_authenticated:
+#                 user_obj = user
+#         return self.model.objects.create(user=user_obj)
 
 
 class Cart(models.Model):
@@ -40,7 +47,7 @@ class Cart(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    objects = CartManager()
+    # objects = CartManager()
 
     def __str__(self):
         return str(self.id)
@@ -69,4 +76,3 @@ def pre_save_cart_receiver(sender, instance, *args, **kargs):
 
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
-

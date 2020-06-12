@@ -7,6 +7,7 @@ urlpatterns=[
     path('logout/',views.Logout.as_view()),
     # path('signup/',views.SignUp.as_view()),
     path('signup/', views.signup, name='signup'),
+#     path('activate/', views.send_sms, name='activate'),
 
 ]
 

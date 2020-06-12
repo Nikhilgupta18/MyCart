@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
+        {% include 'messages.html' %}
         <h1>Your Cart{{ cart.id }}</h1>
         {% for i in cart.products.all %}
             <ul>
@@ -14,3 +15,4 @@
     </div>
 
 {% endblock %}
+
