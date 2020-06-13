@@ -1,17 +1,93 @@
 {% extends 'base.html' %}
+{% block css %}
+.myAlert-bottom{
+    position: fixed;
+    bottom: 5px;
+    left: 40%;
+    font-size: large;
+    max-width: 50%;
+
+    border-radius: 5px;
+
+}
+{% endblock %}
 {% block content %}
-    <div class="container">
+    <div class="row my-2 mx-2">
+
+
+    <div class="container jumbotron col-sm-7 col-md-7" >
         {% include 'messages.html' %}
-        <h1>Your Cart{{ cart.id }}</h1>
-        {% for i in cart.products.all %}
-            <ul>
-                <li>
-                    {{ i }}
-                </li>
-            </ul>
-        {% endfor %}
-        <h3>Your SubTotal: ₹{{ cart.subtotal }}</h3>
-        <h3>Total amount: ₹{{ cart.total }}</h3>
+    {% if cart.user  %}
+        <h1 class="display-4">{{ cart.user }}'s Cart({{ items }})</h1>
+    {% else %}
+        <h1 class="display-4">Your Cart({{ items }})</h1>
+    {% endif %}
+
+
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in cart.products.all %}
+        <tr>
+          <th style="width:10%;">
+              <img src="{{ i.P_image.url }}" alt="" height="150px" width="auto"></th>
+          <td>
+              <h2>{{ i }}</h2>
+              <p class="text-muted">{{ i.P_desc }}</p>
+          </td>
+          <td>₹{{ i.P_price }}</td>
+
+        </tr>
+      {% endfor %}
+
+      </tbody>
+    </table>
+
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <div class="card" style="width: 25rem;">
+            <div class="card-body">
+
+                <table class="table table-light">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="card-title text-muted">PRICE DETAILS</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                <tr>
+                <th><h5>Price: </h5></th>
+                    <td><h5>₹{{ cart.subtotal }}</h5></td>
+
+                </tr>
+                <tr>
+                <th><h5>Delivery Fee: </h5></th>
+                    {% if del_fee %}
+                    <td><h5>₹{{ del_fee }}</h5></td>
+                    {% else %}
+                    <td><h5 class="text-success">Free</h5></td>
+                    {% endif %}
+
+
+                </tr>
+
+                <tr>
+
+                <th><h3>Total amount:</h3></th>
+                    <td> <h3>₹{{ cart.total }}</h3></td>
+                  </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+   </div>
     </div>
 
 {% endblock %}

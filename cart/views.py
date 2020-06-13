@@ -18,9 +18,14 @@ def cart(request):
         cart_obj = Cart.objects.get(id=request.session.get('cart_id'))
     # cart_obj, new_obj = Cart.objects.new_or_get(request)
     n = len(cart_obj.products.all())
+    if cart_obj.subtotal == cart_obj.total:
+        del_fee = 0
+    else:
+        del_fee = 25
     context = {
         'cart': cart_obj,
         'items': n,
+        'del_fee': del_fee,
 
     }
     return render(request, 'cart.html', context)
@@ -29,6 +34,7 @@ def cart(request):
     # request.session['user'] = request.user.username
     # print(request.session.get('user'))
     # request.session.set_expiry(300)  this allows us to end the session in milliseconds, here = 5 mins
+
 
 # @login_required()
 # def test(request):
@@ -52,10 +58,9 @@ def cart_update(request):
             cart_obj = Cart.objects.get(id=request.session.get('cart_id'))
         if product in cart_obj.products.all():
             cart_obj.products.remove(product)
-            messages.warning(request, 'Removed from cart')
+            messages.error(request, '%s Removed from cart' % product)
         else:
             cart_obj.products.add(product)
-            messages.success(request, 'Added to cart')
+            messages.success(request, '%s Added to cart' % product)
 
     return redirect(reverse('cart'))
-
