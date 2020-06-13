@@ -6,22 +6,31 @@ from django.contrib import messages
 
 
 def cart(request):
-    # cart = Cart.objects.filter(User=request.user)
     if request.user.is_authenticated:
         cart_obj = Cart.objects.get(user=request.user)
-
-        # try:
-        #     cart_obj = Cart.objects.get(user=request.user)
-        # except:
-        #     cart_obj = Cart.objects.create(user=request.user)
     else:
         cart_obj = Cart.objects.get(id=request.session.get('cart_id'))
-    # cart_obj, new_obj = Cart.objects.new_or_get(request)
+    # if request.user.is_authenticated and cart_obj.user is None:
+    #     if Cart.objects.filter(user=request.user).exists:
+    #         cart_obj = Cart.objects.get(user=request.user)
+    #     else:
+    #         cart_obj.user = request.user
+    #         cart_obj.save()
+
+    if request.POST:
+        product_id = request.POST.get('product_id')
+        if product_id is not None:
+            product = Product.objects.get(id=product_id)
+            if product in cart_obj.products.all():
+                cart_obj.products.remove(product)
+                messages.error(request, '%s Removed from cart' % product)
+
     n = len(cart_obj.products.all())
-    if cart_obj.subtotal == cart_obj.total:
+    if cart_obj.total and cart_obj.subtotal == cart_obj.total:
         del_fee = 0
     else:
         del_fee = 25
+
     context = {
         'cart': cart_obj,
         'items': n,

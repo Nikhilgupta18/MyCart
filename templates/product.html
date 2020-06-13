@@ -24,10 +24,10 @@
                     {{ product.P_gender }}
                 </div>
             </div>
+
        <form method="POST" action="{% url 'cart-update' %}" >
         {% csrf_token %}
     <input type="hidden" name="product_id" value="{{ product.id }}">
-        <button class="btn btn-cart btn-primary mx-3" style="margin-top: 10px; ">Buy Now</button>
         {% if product in cart.products.all %}
 
             <button class="btn  btn-danger" type="submit" style="margin-top: 10px; ">Remove From Cart</button>

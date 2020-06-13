@@ -1,7 +1,7 @@
 
 {% extends 'base.html' %}
 {% load static i18n %}
-
+{% block title %}My Cart{% endblock %}
 {% block css %}
             .jumbotron{
                 padding: 2rem 1rem;
@@ -21,7 +21,7 @@
           {
           display: inline-block;
           margin-left:-4px;
-  box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.2), 10px 6px 20px 0 rgba(0, 0, 0, 0.19);;
+  box-shadow: 10px 10px 5px 0 rgba(0, 0, 0, 0.2), 10px 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 
           }
@@ -91,10 +91,9 @@
                   {% for i in product %}
                     <div class="col-xs-3 col-sm-3 col-md-3">
                       <div class="card align-items-center" style="width: 16rem;">
-                        <img src='{{ i.P_image.url }}' class="card-img-top img-responsive" alt="...">
+                        <img src='{{ i.P_image.url }}' class="card-img-top img-responsive" alt="..." style="margin-top:2px;">
                         <div class="card-body">
-                          <p class="card-title">{{i.P_name}}</p>
-            {#              <p class="card-text">{{i.desc}}</p>#}
+                          <p class="card-title">{{i.P_name|capfirst}}</p>
                           <a href="{% url 'product' i.id %}" class="btn btn-primary">View</a>
                             <span id="divcart{{ i.id }}" class="divcart">
 {#                            <button id="cart{{i.id}}" class="btn btn-primary cart">Add to Cart</button>#}
@@ -113,12 +112,12 @@
 
 
                 </div>
-                <a class="carousel-control-prev" href="#demo-prod" data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#demo-prod" data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
+{#                <a class="carousel-control-prev" href="#demo-prod" data-slide="prev">#}
+{#                    <span class="carousel-control-prev-icon"></span>#}
+{#                </a>#}
+{#                <a class="carousel-control-next" href="#demo-prod" data-slide="next">#}
+{#                    <span class="carousel-control-next-icon"></span>#}
+{#                </a>#}
             </div>
             <!-- left and right controls for the slide -->
 

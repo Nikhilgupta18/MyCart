@@ -64,11 +64,14 @@
 
         <ul class="navbar-nav ml-auto">
         <li class="nav-item ">
-            <a class="nav-link" href="{% url 'cart' %}">Cart(<span>{{ items }}</span>)</a>
+            <a class="nav-link" href="{% url 'cart' %}"  data-toggle="popover" data-content="Cart items" title="{{items}} item(s) in Cart" >
+                <img src="{% static 'main/cart_icon.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                <span class="badge badge-danger">{{ items }}</span>
+            </a>
         </li>
             <li class="nav-item">
                       {% if request.user.is_authenticated %}
-                        Hello {{ user }}
+                        Hello {{ user|capfirst }}
                         <a class="btn btn-danger" href="/auth/logout">Logout</a>
                       {% else %}
                         <a class="btn btn-success" href="/auth/login">Login</a>
@@ -97,10 +100,14 @@
 
 <script>
 $(document).ready(function(){
-    $("#msg").fadeOut(2000);
+    $("#msg").fadeOut(4000);
 
-
+{#$('[data-toggle="popover"]').popover();#}
 });
+
+
+
+
     {% block js %}
 
     {% endblock %}

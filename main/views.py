@@ -7,7 +7,7 @@ from cart.models import Cart
 
 def index(request):
     # print(request.session.get("first_name", "Unknown"))
-    product = models.Product.objects.all()
+    product = models.Product.objects.filter(P_offer='N')
     if request.user.is_authenticated:
         try:
             cart_obj = Cart.objects.get(user=request.user)
@@ -19,8 +19,8 @@ def index(request):
         except:
             cart_obj = Cart.objects.create(user=None)
             request.session['cart_id'] = cart_obj.id
-    print(request.session.session_key)
     cart_items = len(cart_obj.products.all())
+
     n = len(product)
     slides = n // 4 + ceil((n / 4) - (n // 4))
     context = {
