@@ -24,7 +24,7 @@ django-sendsms==0.4
 django-weasyprint==0.5.5
 django-wkhtmltopdf==3.3.0
 html5lib==1.0.1
-httplib2==0.9.2
+httplib2==0.18.0
 idna==2.9
 img2pdf==0.3.4
 kazam==1.5.3
