@@ -51,10 +51,10 @@
       </li>
 
 
-        <form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'search' %}">
     <div class="input-group">
 
-      <input  class="form-control" type="search" placeholder="Search Products.." aria-label="Search">
+      <input  class="form-control" type="search" id="search" placeholder="Search Products.." aria-label="Search" name="query">
         <div class="input-group-prepend">
         <button class="btn input-group-text" style="background-color: #febd68;"><i class="material-icons">search</i></button>
       </div>
@@ -100,7 +100,7 @@
 
 <script>
 $(document).ready(function(){
-    $("#msg").fadeOut(4000);
+    $("#msg").fadeOut(6000);
 
 {#$('[data-toggle="popover"]').popover();#}
 });

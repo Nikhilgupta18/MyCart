@@ -19,9 +19,14 @@
                     {{product.P_name}}
                     </h2>
                     <hr>
-                    <p >{{ product.P_desc }}</p>
-                    <h4 class="display-8">₹{{ product.P_price }}</h4>
-                    {{ product.P_gender }}
+                    <div>
+                        <h3 class="display-8">Price: ₹{{ product.disc_price }}</h3>
+                        <h6 class="text-muted">M.R.P. <del>₹{{ product.P_price }}</del></h6>
+                    </div>
+                    <br>
+                    <p>{{ product.P_desc }}</p>
+
+                    <span>{{ product.P_gender }}</span>
                 </div>
             </div>
 

@@ -9,7 +9,6 @@ from django.contrib.auth.views import (
 )
 
 
-
 # Create your views here.
 class Login(LoginView):
     template_name = 'login.html'

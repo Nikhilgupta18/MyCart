@@ -3,7 +3,7 @@ from .models import Cart
 from product.models import Product
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from orders.models import Order
 
 def cart(request):
     if request.user.is_authenticated:
@@ -17,7 +17,7 @@ def cart(request):
     #         cart_obj.user = request.user
     #         cart_obj.save()
 
-    if request.POST:
+    if request.method == 'POST':
         product_id = request.POST.get('product_id')
         if product_id is not None:
             product = Product.objects.get(id=product_id)
@@ -73,3 +73,21 @@ def cart_update(request):
             messages.success(request, '%s Added to cart' % product)
 
     return redirect(reverse('cart'))
+
+
+def checkout(request):
+    if request.user.is_authenticated:
+        cart_obj = Cart.objects.get(user=request.user)
+    else:
+        cart_obj = Cart.objects.get(id=request.session.get('cart_id'))
+
+    order_obj = None
+    if cart_obj.products.count() == 0:
+        return redirect(reverse('cart'))
+    else:
+        order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
+    context = {
+        'order': order_obj
+    }
+    return render(request, 'order.html', context)
+

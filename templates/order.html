@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container ">
+        <h2>Place Order</h2>
+        <p>Order ID: {{  order.order_id | upper }}</p>
+          <p>Total: {{ order.amount }}</p>
+            <p>User: {{ order.cart.user }}</p>
+
+    </div>
+
+{% endblock %}

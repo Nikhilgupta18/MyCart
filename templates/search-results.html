@@ -9,6 +9,15 @@
 }
 {% endblock %}
 {% block content %}
+    {% include 'messages.html' %}
+    {% if product|length < 1 %}
+        <p>Your search - {{ query|upper }} ... - did not match any content.</p>
+        <ul>Suggestions:
+        <li>Try different keywords.</li>
+        <li>Make sure that all words are spelled correctly.</li>
+        </ul>
+
+    {% endif %}
     {% for product in product %}
 <div class="jumbotron" style="margin-top: 25px;">
 <div class="container " >
@@ -19,14 +28,14 @@
                 {{product.P_name|capfirst}}
                 </h2>
                 <hr>
-                <div>
-                        <h3 class="display-8">Price: ₹{{ product.disc_price }}</h3>
-                        <h6 class="text-muted">M.R.P. <del>₹{{ product.P_price }}</del></h6>
-                    </div>
-                    <br>
-                    <p>{{ product.P_desc }}</p>
-
-                    <span>{{ product.P_gender }}</span>
+                <p >{{ product.P_desc }}</p>
+                {% if product.P_gender == 'M'%}
+                    Male
+                {% elif product.P_gender == 'F' %}
+                    Female
+              {% endif %}
+{#                {{ product.P_gender }}#}
+                <h4 class="display-8">₹{{ product.P_price }}</h4>
 
 
 
