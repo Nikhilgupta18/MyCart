@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Cart
+from .models import Cart, Item
 from product.models import Product
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from orders.models import Order
+
 
 def cart(request):
     if request.user.is_authenticated:
@@ -60,10 +61,13 @@ def cart_update(request):
     product_id = request.POST.get('product_id')
     if product_id is not None:
         product = Product.objects.get(id=product_id)
+
         # cart_obj, new_obj = Cart.objects.new_or_get(request)
         if request.user.is_authenticated:
+            # cart_item = Item.objects.get_or_create(user=request.user, item=product)
             cart_obj = Cart.objects.get(user=request.user)
         else:
+            # cart_item = Item.objects.get_or_create(user=None, item=product)
             cart_obj = Cart.objects.get(id=request.session.get('cart_id'))
         if product in cart_obj.products.all():
             cart_obj.products.remove(product)
@@ -90,4 +94,3 @@ def checkout(request):
         'order': order_obj
     }
     return render(request, 'order.html', context)
-

@@ -55,9 +55,11 @@
     <div class="input-group">
 
       <input  class="form-control" type="search" id="search" placeholder="Search Products.." aria-label="Search" name="query">
+        {{ filter.form }}
         <div class="input-group-prepend">
         <button class="btn input-group-text" style="background-color: #febd68;"><i class="material-icons">search</i></button>
-      </div>
+
+        </div>
     </div>
   </form>
     </ul>
@@ -73,6 +75,9 @@
                       {% if request.user.is_authenticated %}
                         Hello {{ user|capfirst }}
                         <a class="btn btn-danger" href="/auth/logout">Logout</a>
+                          {% if request.user.is_superuser %}
+                            <a  href="{% url 'user_search_reset_password' %}">Change Password</a>
+                          {% endif %}
                       {% else %}
                         <a class="btn btn-success" href="/auth/login">Login</a>
                         <a class="btn btn-success" href="/auth/signup">SignUp</a>

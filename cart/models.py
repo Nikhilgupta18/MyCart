@@ -38,10 +38,26 @@ from product.models import Product
 #                 user_obj = user
 #         return self.model.objects.create(user=user_obj)
 
+class Item(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    item = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return '%s:%s:%s' % (self.user, self.item, self.quantity)
+
+
+def post_save_item_quantity(sender, instance, *args, **kargs):
+    instance.total_amount = instance.quantity * instance.item.disc_price
+
+
+pre_save.connect(post_save_item_quantity, sender=Item)
+
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    products = models.ManyToManyField(Product, blank=True,)
+    products = models.ManyToManyField(Product, blank=True)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -76,6 +92,3 @@ def pre_save_cart_receiver(sender, instance, *args, **kargs):
 
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
-
-
-

@@ -4,4 +4,5 @@ from . import models
 admin.site.register([
     # models.Author,
     # models.Product
+    models.MyCartUser
 ])

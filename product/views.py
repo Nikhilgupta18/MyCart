@@ -6,6 +6,7 @@ from django.views.generic import (
     ListView
 )
 from math import ceil
+from .filters import ProductFilter
 from cart.models import Cart
 
 
@@ -40,11 +41,13 @@ def prod_cat(request, category):
         cart_obj = Cart.objects.get(id=request.session.get('cart_id'))
 
     n = len(cart_obj.products.all())
-
     context = {
         'product': cat,
         'cart': cart_obj,
         'items': n,
+
     }
 
     return render(request, 'product_view.html', context)
+
+

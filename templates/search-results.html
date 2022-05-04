@@ -9,16 +9,22 @@
 }
 {% endblock %}
 {% block content %}
+
     {% include 'messages.html' %}
-    {% if product|length < 1 %}
+    {% if filter.qs|length < 1 %}
+        <div class="container">
         <p>Your search - {{ query|upper }} ... - did not match any content.</p>
         <ul>Suggestions:
         <li>Try different keywords.</li>
         <li>Make sure that all words are spelled correctly.</li>
         </ul>
-
+         </div>
     {% endif %}
-    {% for product in product %}
+
+{#    {% if query and product|length > 0%}#}
+{#    <a href="{% url 'download' query %}" class="btn btn-primary text-center">Download</a>#}
+{#    {% endif %}#}
+    {% for product in filter.qs %}
 <div class="jumbotron" style="margin-top: 25px;">
 <div class="container " >
         <div class="row">
@@ -34,7 +40,7 @@
                 {% elif product.P_gender == 'F' %}
                     Female
               {% endif %}
-{#                {{ product.P_gender }}#}
+
                 <h4 class="display-8">₹{{ product.P_price }}</h4>
 
 
